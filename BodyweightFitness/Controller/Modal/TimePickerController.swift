@@ -52,11 +52,7 @@ class TimePickerController: UIViewController, UIPickerViewDataSource, UIPickerVi
         
         (_, self.minutes, self.seconds) = secondsToHoursMinutesSeconds(seconds)
     }
-    
-    func secondsToHoursMinutesSeconds (_ seconds : Int) -> (Int, Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
-    }
-    
+        
     func getTotalSeconds() -> Int {
         let minutes = self.timePickerView.selectedRow(inComponent: 0)
         let seconds = self.timePickerView.selectedRow(inComponent: 1)

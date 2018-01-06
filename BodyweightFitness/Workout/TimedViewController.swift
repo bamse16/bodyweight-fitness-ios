@@ -71,10 +71,6 @@ class TimedViewController: UIViewController {
             return "0" + String(value)
         }
     }
-  
-    func secondsToHoursMinutesSeconds (_ seconds : Int) -> (Int, Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
-    }
     
     func stopTimer() {
         isPlaying = false
