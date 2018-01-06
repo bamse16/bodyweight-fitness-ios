@@ -147,49 +147,6 @@ class WeightedViewController: UIViewController {
             return
         }
 
-        self.log(reps: self.numberOfReps, for: current)
-    }
-
-    func log(reps: Int, for exercise: Exercise) {
-        if (exercise.isTimed()) {
-            return
-        }
-
-        let numberOfRepsIsValid = self.numberOfReps >= 1 && self.numberOfReps <= 25
-        if (!numberOfRepsIsValid) {
-            return
-        }
-
-        let realm = RepositoryStream.sharedInstance.getRealm()
-        let repositoryRoutine = RepositoryStream.sharedInstance.getRepositoryRoutineForToday()
-
-        if let repositoryExercise = repositoryRoutine.exercises.filter({
-            $0.exerciseId == exercise.exerciseId
-        }).first {
-            let sets = repositoryExercise.sets
-
-            try! realm.write {
-                if (sets.count == 1 && sets[0].reps == 0) {
-                    sets[0].reps = reps
-                } else if (sets.count >= 1 && sets.count < 9) {
-                    let repositorySet = RepositorySet()
-
-                    repositorySet.exercise = repositoryExercise
-                    repositorySet.isTimed = false
-                    repositorySet.reps = reps
-
-                    sets.append(repositorySet)
-
-                    repositoryRoutine.lastUpdatedTime = Date()
-                }
-
-                realm.add(repositoryRoutine, update: true)
-
-                self.showNotification(message: "Logged Set \(sets.count) - \(reps) reps")
-                self.showRestTimer()
-            }
-
-            RoutineStream.sharedInstance.setRepository()
-        }
+        self.delegate?.log(reps: self.numberOfReps, for: current)
     }
 }
