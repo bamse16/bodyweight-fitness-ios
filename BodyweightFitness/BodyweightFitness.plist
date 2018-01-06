@@ -40,6 +40,10 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app does not require access to the camera.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>This permission is necessary to read the workout data</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>This permission is necessary to save the workout data</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app does not require access to the microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

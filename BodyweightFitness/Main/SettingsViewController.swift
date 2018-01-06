@@ -106,6 +106,28 @@ extension SettingsViewController {
                     }
                 }
             }
+            +++ Eureka.Section("HealthKit")
+            <<< ButtonRow() {
+                $0.title = "Authorise"
+                $0.onCellSelection({ (cell, row) in
+                    HealthManager.authorizeHealthKit(completion: { (authorized, error) in
+                        guard authorized else {
+                            let baseMessage = "HealthKit Authorization Failed"
+
+                            if let error = error {
+                                print("\(baseMessage). Reason: \(error.localizedDescription)")
+                            } else {
+                                print(baseMessage)
+                            }
+
+                            return
+                        }
+
+                        print("HealthKit Successfully Authorized.")
+                    })
+                })
+            }
+
             +++ Eureka.Section("Author")
             <<< TextRow() {
                 $0.title = "Name"
