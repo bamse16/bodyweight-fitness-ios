@@ -71,7 +71,7 @@ class TimedViewController: UIViewController {
             return "0" + String(value)
         }
     }
-    
+
     func stopTimer() {
         isPlaying = false
         
@@ -120,6 +120,7 @@ class TimedViewController: UIViewController {
         
         updateLabel()
     }
+
     func setTimeAction() {
         if let seconds = self.timePickerController?.getTotalSeconds() {
             self.defaultSeconds = seconds
@@ -130,47 +131,56 @@ class TimedViewController: UIViewController {
     }
     
     func logSeconds() {
-        if let current = self.rootViewController?.current {
-            if (loggedSeconds > 1 && current.isTimed()) {
-                let realm = RepositoryStream.sharedInstance.getRealm()
-                let repositoryRoutine = RepositoryStream.sharedInstance.getRepositoryRoutineForToday()
-                
-                if let repositoryExercise = repositoryRoutine.exercises.filter({
-                    $0.exerciseId == current.exerciseId
-                }).first {
-                    let sets = repositoryExercise.sets
-                    
-                    try! realm.write {
-                        if (sets.count == 1 && sets[0].seconds == 0) {
-                            sets[0].seconds = loggedSeconds
-
-                            self.showNotification(loggedSeconds)
-                            self.showRestTimer()
-                        } else if (sets.count >= 1 && sets.count < 9) {
-                            let repositorySet = RepositorySet()
-                            
-                            repositorySet.exercise = repositoryExercise
-                            repositorySet.isTimed = true
-                            repositorySet.seconds = loggedSeconds
-                            
-                            sets.append(repositorySet)
-                            
-                            repositoryRoutine.lastUpdatedTime = Date()
-                            
-                            self.showNotification(loggedSeconds)
-                            self.showRestTimer()
-                        }
-                        
-                        realm.add(repositoryRoutine, update: true)
-                    }
-
-                    RoutineStream.sharedInstance.setRepository()
-                }
-            }
-            
+        guard let current = self.rootViewController?.current else {
+            loggedSeconds = 0
+            return
         }
-        
-        loggedSeconds = 0
+
+        self.log(seconds: self.loggedSeconds, for: current)
+        self.loggedSeconds = 0
+    }
+
+    func log(seconds: Int, for exercise: Exercise) {
+        if (!exercise.isTimed()) {
+            return
+        }
+
+        if (seconds <= 0) {
+            return
+        }
+
+        let realm = RepositoryStream.sharedInstance.getRealm()
+        let repositoryRoutine = RepositoryStream.sharedInstance.getRepositoryRoutineForToday()
+
+        if let repositoryExercise = repositoryRoutine.exercises.filter({
+            $0.exerciseId == exercise.exerciseId
+        }).first {
+            let sets = repositoryExercise.sets
+
+            try! realm.write {
+                if (sets.count == 1 && sets[0].seconds == 0) {
+                    sets[0].seconds = seconds
+                } else if (sets.count >= 1 && sets.count < 9) {
+                    let repositorySet = RepositorySet()
+
+                    repositorySet.exercise = repositoryExercise
+                    repositorySet.isTimed = true
+                    repositorySet.seconds = seconds
+
+                    sets.append(repositorySet)
+
+                    repositoryRoutine.lastUpdatedTime = Date()
+
+                }
+
+                realm.add(repositoryRoutine, update: true)
+
+                self.showNotification(seconds)
+                self.showRestTimer()
+            }
+
+            RoutineStream.sharedInstance.setRepository()
+        }
     }
 
     func showRestTimer() {
