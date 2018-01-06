@@ -71,20 +71,9 @@ class WeightedViewController: UIViewController {
     func showRestTimer() {
         self.delegate?.restTimerShouldStart()
     }
-    
-    func showNotification(_ set: Int, reps: Int) {
-        let notification = CWStatusBarNotification()
-        
-        notification.notificationLabelFont = UIFont.boldSystemFont(ofSize: 17)
-        notification.notificationLabelBackgroundColor = UIColor.primary()
-        notification.notificationLabelTextColor = UIColor.primaryDark()
-        
-        notification.notificationStyle = .navigationBarNotification
-        notification.notificationAnimationInStyle = .top
-        notification.notificationAnimationOutStyle = .top
-        
-        notification.displayNotificationWithMessage("Logged Set \(set) - \(reps) reps", forDuration: 2.0)
-        
+
+    func showNotification(message: String) {
+        CWStatusBarNotification.workoutNotification(message: message)
         self.updateLabels()
     }
 
@@ -196,7 +185,7 @@ class WeightedViewController: UIViewController {
 
                 realm.add(repositoryRoutine, update: true)
 
-                self.showNotification(sets.count, reps: reps)
+                self.showNotification(message: "Logged Set \(sets.count) - \(reps) reps")
                 self.showRestTimer()
             }
 

@@ -175,7 +175,7 @@ class TimedViewController: UIViewController {
 
                 realm.add(repositoryRoutine, update: true)
 
-                self.showNotification(seconds)
+                self.showNotification(message: "Logged \(seconds) seconds")
                 self.showRestTimer()
             }
 
@@ -186,19 +186,9 @@ class TimedViewController: UIViewController {
     func showRestTimer() {
         self.delegate?.restTimerShouldStart()
     }
-    
-    func showNotification(_ seconds: Int) {
-        let notification = CWStatusBarNotification()
-        
-        notification.notificationLabelFont = UIFont.boldSystemFont(ofSize: 17)
-        notification.notificationLabelBackgroundColor = UIColor.primary()
-        notification.notificationLabelTextColor = UIColor.primaryDark()
-        
-        notification.notificationStyle = .navigationBarNotification
-        notification.notificationAnimationInStyle = .top
-        notification.notificationAnimationOutStyle = .top
-        
-        notification.displayNotificationWithMessage("Logged \(seconds) seconds", forDuration: 2.0)
+
+    func showNotification(message: String) {
+        CWStatusBarNotification.workoutNotification(message: message)
     }
     
     @IBAction func increaseButton(_ sender: AnyObject) {

@@ -50,6 +50,19 @@ open class CWStatusBarNotification : NSObject {
     open var notificationAnimationOutStyle : CWNotificationAnimationStyle
     open var notificationAnimationType : CWNotificationAnimationType
     open var preferredStatusBarStyle : UIStatusBarStyle
+
+    public class func workoutNotification(message: String) {
+        let notification = CWStatusBarNotification()
+
+        notification.notificationLabelFont = UIFont.boldSystemFont(ofSize: 17)
+        notification.notificationLabelBackgroundColor = UIColor.primary()
+        notification.notificationLabelTextColor = UIColor.primaryDark()
+
+        notification.notificationStyle = .navigationBarNotification
+        notification.notificationAnimationInStyle = .top
+        notification.notificationAnimationOutStyle = .top
+        notification.displayNotificationWithMessage(message, forDuration: 2.0)
+    }
     
     // MARK: - setup
     
