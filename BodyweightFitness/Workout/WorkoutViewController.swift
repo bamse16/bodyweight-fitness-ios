@@ -6,6 +6,7 @@ protocol WorkoutInteractionDelegate {
     func selectNextExercise()
     func restTimerShouldStart()
     func restTimerShouldStop()
+    func timerDidFinish()
 }
 
 class WorkoutNavigationController: UINavigationController {}
@@ -27,11 +28,11 @@ class WorkoutViewController: UIViewController, WorkoutInteractionDelegate {
     let userDefaults: UserDefaults = UserDefaults()
     
     var current: Exercise = RoutineStream.sharedInstance.routine.getFirstExercise()
+
+    let audioManager: AudioManager = AudioManager()
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
 
         self.timedViewController.rootViewController = self
         self.weightedViewController.rootViewController = self
@@ -392,6 +393,18 @@ class WorkoutViewController: UIViewController, WorkoutInteractionDelegate {
         } else {
             self.timedViewController.view.isHidden = true
             self.weightedViewController.view.isHidden = false
+        }
+    }
+
+    func timerDidFinish() {
+        let defaults = Foundation.UserDefaults.standard
+        if(defaults.object(forKey: "playAudioWhenTimerStops") != nil) {
+            let playAudioWhenTimerStops = defaults.bool(forKey: "playAudioWhenTimerStops")
+            if(playAudioWhenTimerStops) {
+                self.audioManager.playFinished()
+            }
+        } else {
+            self.audioManager.playFinished()
         }
     }
   }

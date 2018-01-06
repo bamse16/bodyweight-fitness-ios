@@ -1,7 +1,6 @@
 import UIKit
-import AVFoundation
 
-class TimedViewController: UIViewController, AVAudioPlayerDelegate {
+class TimedViewController: UIViewController {
     @IBOutlet var timerMinutesButton: UIButton!
     @IBOutlet var timerSecondsButton: UIButton!
     
@@ -15,7 +14,6 @@ class TimedViewController: UIViewController, AVAudioPlayerDelegate {
     var rootViewController: WorkoutViewController? = nil
     var current: Exercise = RoutineStream.sharedInstance.routine.getFirstExercise()
     
-    var audioPlayer: AVAudioPlayer?
     var timePickerController: TimePickerController?
     var timer = Timer()
     var isPlaying = false
@@ -121,16 +119,7 @@ class TimedViewController: UIViewController, AVAudioPlayerDelegate {
         
         if(seconds <= 0) {
             restartTimer(defaultSeconds)
-            
-            let defaults = Foundation.UserDefaults.standard
-            if(defaults.object(forKey: "playAudioWhenTimerStops") != nil) {
-                let playAudioWhenTimerStops = defaults.bool(forKey: "playAudioWhenTimerStops")
-                if(playAudioWhenTimerStops) {
-                    audioPlayerStart()
-                }
-            } else {
-                audioPlayerStart()
-            }
+            self.delegate?.timerDidFinish()
         }
         
         updateLabel()
@@ -187,32 +176,7 @@ class TimedViewController: UIViewController, AVAudioPlayerDelegate {
         
         loggedSeconds = 0
     }
-    
-    func audioPlayerStart() {
-        let alertSound = URL(fileURLWithPath: Bundle.main
-            .path(forResource: "finished", ofType: "mp3")!)
-        
-        do {
-            try AVAudioSession.sharedInstance().setActive(true)
-            
-            audioPlayer = try AVAudioPlayer(contentsOf: alertSound, fileTypeHint: nil)
-            audioPlayer?.delegate = self
-            audioPlayer?.prepareToPlay()
-            audioPlayer?.play()
-        } catch {
-            print("AVAudioSession errors.")
-        }
-    }
-    
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        do {
-            try AVAudioSession.sharedInstance().setActive(false, with:
-                AVAudioSessionSetActiveOptions.notifyOthersOnDeactivation)
-        } catch {
-            print("AVAudioSession errors.")
-        }
-    }
-    
+
     func showRestTimer() {
         self.delegate?.restTimerShouldStart()
     }
@@ -265,8 +229,7 @@ class TimedViewController: UIViewController, AVAudioPlayerDelegate {
         
         self.parent?.present(alertController, animated: true, completion: nil)
     }
-    
-    
+
     @IBAction func previousButtonClicked(_ sender: AnyObject) {
         self.delegate?.selectPreviousExercise()
     }
