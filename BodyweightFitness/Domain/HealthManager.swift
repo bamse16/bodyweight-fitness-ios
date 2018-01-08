@@ -19,7 +19,7 @@ class HealthManager {
         return HKHealthStore.isHealthDataAvailable()
     }
 
-    class func authorizeHealthKit(completion: @escaping (Bool, Error?) -> Swift.Void) {
+    class func authorizeHealthKit(completion: @escaping (Bool, Error?) -> Void) {
         guard HealthManager.healthKitIsAvailable() else {
             completion(false, HealthkitSetupError.notAvailableOnDevice)
             return
@@ -33,6 +33,24 @@ class HealthManager {
                                                 completion(success, error)
         }
     }
+
+    class func save(workout: HealthKitWorkout, completion: @escaping(Bool, Error?) -> Void) {
+        let calorieQuantity = HKQuantity(unit: HKUnit.kilocalorie(),
+                                         doubleValue: workout.totalEnergyBurned)
+        let workout = HKWorkout(activityType: .functionalStrengthTraining,
+                                start: workout.start,
+                                end: workout.end,
+                                duration: workout.duration,
+                                totalEnergyBurned: calorieQuantity,
+                                totalDistance: nil,
+                                device: HKDevice.local(),
+                                metadata: nil)
+        let healthStore = HKHealthStore()
+        healthStore.save(workout) { (success, error) in
+            completion(success, error)
+        }
+    }
+}
 
 struct HealthKitWorkout {
     var start: Date

@@ -442,6 +442,11 @@ class WorkoutViewController: UIViewController, WorkoutInteractionDelegate {
                     sets.append(repositorySet)
 
                     repositoryRoutine.lastUpdatedTime = Date()
+                    
+                    let hkWorkout = HealthKitWorkout(repositoryRoutine: repositoryRoutine)
+                    HealthManager.save(workout: hkWorkout, completion: { (success, error) in
+                        //
+                    })
                 }
 
                 realm.add(repositoryRoutine, update: true)
@@ -486,6 +491,10 @@ class WorkoutViewController: UIViewController, WorkoutInteractionDelegate {
 
                     repositoryRoutine.lastUpdatedTime = Date()
 
+                    let hkWorkout = HealthKitWorkout(repositoryRoutine: repositoryRoutine)
+                    HealthManager.save(workout: hkWorkout, completion: { (success, error) in
+                        //
+                    })
                 }
 
                 realm.add(repositoryRoutine, update: true)
