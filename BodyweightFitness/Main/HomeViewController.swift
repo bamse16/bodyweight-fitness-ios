@@ -363,16 +363,16 @@ class HomeViewController: AbstractViewController, MFMailComposeViewControllerDel
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
-        alertController.addAction(UIAlertAction(title: "Bodyweight Fitness", style: .default) { (action) in
-            RoutineStream.sharedInstance.setRoutine("routine0")
+        alertController.addAction(UIAlertAction(title: ExternalRoutineMap.BodyweightFitness.name, style: .default) { (action) in
+            RoutineStream.sharedInstance.setRoutine(ExternalRoutineMap.BodyweightFitness.id)
         })
         
-        alertController.addAction(UIAlertAction(title: "Starting Stretching", style: .default) { (action) in
-            RoutineStream.sharedInstance.setRoutine("d8a722a0-fae2-4e7e-a751-430348c659fe")
+        alertController.addAction(UIAlertAction(title: ExternalRoutineMap.StartingStretching.name, style: .default) { (action) in
+            RoutineStream.sharedInstance.setRoutine(ExternalRoutineMap.StartingStretching.id)
         })
         
-        alertController.addAction(UIAlertAction(title: "Molding Mobility", style: .default) { (action) in
-            RoutineStream.sharedInstance.setRoutine("e73593f4-ee17-4b9b-912a-87fa3625f63d")
+        alertController.addAction(UIAlertAction(title: ExternalRoutineMap.MoldingMobility.name, style: .default) { (action) in
+            RoutineStream.sharedInstance.setRoutine(ExternalRoutineMap.MoldingMobility.id)
         })
         
         self.present(alertController, animated: true, completion: nil)

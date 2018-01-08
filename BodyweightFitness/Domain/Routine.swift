@@ -13,6 +13,24 @@ enum SectionMode: Int {
     case levels
 }
 
+struct ExternalRoutine {
+    var name: String
+    var id: String
+    var fileName: String
+}
+
+struct ExternalRoutineMap {
+    static let BodyweightFitness = ExternalRoutine(name: "Bodyweight Fitness",
+                                                   id: "routine0",
+                                                   fileName: "bodyweight_fitness_recommended_routine")
+    static let MoldingMobility = ExternalRoutine(name: "Molding Mobility",
+                                                 id: "e73593f4-ee17-4b9b-912a-87fa3625f63d",
+                                                 fileName: "molding_mobility_flexibility_routine")
+    static let StartingStretching = ExternalRoutine(name: "Starting Stretching",
+                                                    id: "d8a722a0-fae2-4e7e-a751-430348c659fe",
+                                                    fileName: "starting_stretching_flexibility_routine")
+}
+
 protocol LinkedRoutine: class {
     func getType() -> RoutineType
 }
@@ -97,7 +115,7 @@ class Exercise: LinkedRoutine {
 }
 
 class Routine {
-    var routineId: String = "routine0"
+    var routineId: String = ExternalRoutineMap.BodyweightFitness.id
     var title: String = ""
     var subtitle: String = ""
     var shortDescription: String = ""

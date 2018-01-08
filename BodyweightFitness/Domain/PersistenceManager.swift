@@ -125,15 +125,15 @@ class PersistenceManager {
         var fileName = ""
         var id = ""
         
-        if (routineId == "routine0") {
-            fileName = "bodyweight_fitness_recommended_routine"
+        if (routineId == ExternalRoutineMap.BodyweightFitness.id) {
+            fileName = ExternalRoutineMap.BodyweightFitness.fileName
             id = "routine"
-        } else if (routineId == "d8a722a0-fae2-4e7e-a751-430348c659fe") {
-            fileName = "starting_stretching_flexibility_routine"
-            id = "d8a722a0-fae2-4e7e-a751-430348c659fe"
+        } else if (routineId == ExternalRoutineMap.StartingStretching.id) {
+            fileName = ExternalRoutineMap.StartingStretching.fileName
+            id = ExternalRoutineMap.StartingStretching.id
         } else {
-            fileName = "molding_mobility_flexibility_routine"
-            id = "e73593f4-ee17-4b9b-912a-87fa3625f63d"
+            fileName = ExternalRoutineMap.MoldingMobility.fileName
+            id = ExternalRoutineMap.MoldingMobility.id
         }
         
         let documentsDirectory = directoryPath[0]
@@ -156,7 +156,7 @@ class PersistenceManager {
         
         var id = ""
         
-        if (routine.routineId == "routine0") {
+        if (routine.routineId == ExternalRoutineMap.BodyweightFitness.id) {
             id = "routine"
         } else {
             id = routine.routineId

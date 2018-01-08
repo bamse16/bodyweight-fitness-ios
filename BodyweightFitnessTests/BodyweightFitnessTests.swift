@@ -162,7 +162,7 @@ class BodyweightFitnessTests: XCTestCase {
     
     func buildRoutine(_ routine: Routine) -> TestRoutine {
         let testRoutine = TestRoutine()
-        testRoutine.routineId = "routine0"
+        testRoutine.routineId = ExternalRoutineMap.BodyweightFitness.id
         testRoutine.startTime = Date()
         testRoutine.lastUpdatedTime = Date()
         

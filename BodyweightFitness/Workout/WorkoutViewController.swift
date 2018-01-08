@@ -372,7 +372,7 @@ class WorkoutViewController: UIViewController, WorkoutInteractionDelegate {
                         showRestTimer()
                     }
                 } else {
-                    if (routineId != "routine0") {
+                    if (routineId != ExternalRoutineMap.BodyweightFitness.id) {
                         if userDefaults.showRestTimerAfterFlexibilityExercises() {
                             showRestTimer()
                         }

@@ -10,7 +10,7 @@ final class RoutineStream {
     let repositorySubject = PublishSubject<Bool>()
 
     private init() {
-        routine = PersistenceManager.getRoutine("routine0")
+        routine = PersistenceManager.getRoutine(ExternalRoutineMap.BodyweightFitness.id)
         routineSubject.onNext(routine)
     }
     
