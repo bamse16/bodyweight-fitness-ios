@@ -17,18 +17,28 @@ struct ExternalRoutine {
     var name: String
     var id: String
     var fileName: String
+    var calories: Int // Per hour
 }
+
+/*
+ Calories values taken from various sources.
+ BodyWeight Fitness does not consume lots of calories,
+ but it's nice to have a sense of accomplishment in the Health.app.
+ */
 
 struct ExternalRoutineMap {
     static let BodyweightFitness = ExternalRoutine(name: "Bodyweight Fitness",
                                                    id: "routine0",
-                                                   fileName: "bodyweight_fitness_recommended_routine")
+                                                   fileName: "bodyweight_fitness_recommended_routine",
+                                                   calories: 200)
     static let MoldingMobility = ExternalRoutine(name: "Molding Mobility",
                                                  id: "e73593f4-ee17-4b9b-912a-87fa3625f63d",
-                                                 fileName: "molding_mobility_flexibility_routine")
+                                                 fileName: "molding_mobility_flexibility_routine",
+                                                 calories: 170)
     static let StartingStretching = ExternalRoutine(name: "Starting Stretching",
                                                     id: "d8a722a0-fae2-4e7e-a751-430348c659fe",
-                                                    fileName: "starting_stretching_flexibility_routine")
+                                                    fileName: "starting_stretching_flexibility_routine",
+                                                    calories: 170)
 }
 
 protocol LinkedRoutine: class {
