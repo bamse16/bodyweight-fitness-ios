@@ -17,7 +17,7 @@ struct ExternalRoutine {
     var name: String
     var id: String
     var fileName: String
-    var calories: Int // Per hour
+    var calories: Double // Per hour
 }
 
 /*
@@ -39,6 +39,21 @@ struct ExternalRoutineMap {
                                                     id: "d8a722a0-fae2-4e7e-a751-430348c659fe",
                                                     fileName: "starting_stretching_flexibility_routine",
                                                     calories: 170)
+
+    static func calories(routineId: String) -> Double {
+        var caloriesPerHour: Double
+        switch routineId {
+        case ExternalRoutineMap.BodyweightFitness.id:
+            caloriesPerHour = ExternalRoutineMap.BodyweightFitness.calories
+        case ExternalRoutineMap.MoldingMobility.id:
+            caloriesPerHour = ExternalRoutineMap.MoldingMobility.calories
+        case ExternalRoutineMap.StartingStretching.id:
+            caloriesPerHour = ExternalRoutineMap.StartingStretching.calories
+        default:
+            caloriesPerHour = 120 // Value for watching tv
+        }
+        return caloriesPerHour
+    }
 }
 
 protocol LinkedRoutine: class {

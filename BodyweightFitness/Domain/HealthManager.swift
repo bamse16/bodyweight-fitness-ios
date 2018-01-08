@@ -33,4 +33,33 @@ class HealthManager {
                                                 completion(success, error)
         }
     }
+
+struct HealthKitWorkout {
+    var start: Date
+    var end: Date
+    var routineId: String
+
+    var duration: TimeInterval {
+        let defaultDuration: TimeInterval = 60 // one minute
+        var currentDuration = self.end.timeIntervalSince(self.start)
+        if defaultDuration > currentDuration {
+            currentDuration = defaultDuration
+        }
+
+        return currentDuration
+    }
+
+    var totalEnergyBurned: Double {
+        let caloriesPerHour = ExternalRoutineMap.calories(routineId: self.routineId)
+        let hours = self.duration / 3600
+
+        let totalCalories = caloriesPerHour * hours
+        return totalCalories
+    }
+
+    init(repositoryRoutine: RepositoryRoutine) {
+        self.start = repositoryRoutine.startTime
+        self.end = repositoryRoutine.lastUpdatedTime
+        self.routineId = repositoryRoutine.routineId
+    }
 }
