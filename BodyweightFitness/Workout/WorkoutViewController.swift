@@ -4,7 +4,6 @@ import AVFoundation
 protocol WorkoutInteractionDelegate {
     func selectPreviousExercise()
     func selectNextExercise()
-    func restTimerShouldStart()
     func restTimerShouldStop()
     func timerDidFinish()
 
@@ -453,7 +452,7 @@ class WorkoutViewController: UIViewController, WorkoutInteractionDelegate {
 
                 let message = "Logged Set \(sets.count) - \(reps) reps"
                 self.show(message: message, for: exercise)
-                self.showRestTimer()
+                self.restTimerShouldStart()
             }
 
             RoutineStream.sharedInstance.setRepository()
@@ -501,7 +500,7 @@ class WorkoutViewController: UIViewController, WorkoutInteractionDelegate {
 
                 let message = "Logged \(seconds) seconds"
                 self.show(message: message, for: exercise)
-                self.showRestTimer()
+                self.restTimerShouldStart()
             }
 
             RoutineStream.sharedInstance.setRepository()

@@ -68,10 +68,6 @@ class WeightedViewController: UIViewController {
         }
     }
     
-    func showRestTimer() {
-        self.delegate?.restTimerShouldStart()
-    }
-
     func showNotification(message: String) {
         CWStatusBarNotification.workoutNotification(message: message)
         self.updateLabels()

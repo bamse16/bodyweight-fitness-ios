@@ -140,10 +140,6 @@ class TimedViewController: UIViewController {
         self.loggedSeconds = 0
     }
 
-    func showRestTimer() {
-        self.delegate?.restTimerShouldStart()
-    }
-
     func showNotification(message: String) {
         CWStatusBarNotification.workoutNotification(message: message)
     }
