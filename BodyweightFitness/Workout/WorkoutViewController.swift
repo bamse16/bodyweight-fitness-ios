@@ -41,7 +41,7 @@ class WorkoutViewController: UIViewController, WorkoutInteractionDelegate {
 
         self.weightedViewController.delegate = self
         self.timedViewController.delegate = self
-        self.weightedViewController.delegate = self
+        self.restTimerViewController.delegate = self
         
         self.restTimerViewController.view.frame = self.topView.frame
         self.restTimerViewController.willMove(toParentViewController: self)
